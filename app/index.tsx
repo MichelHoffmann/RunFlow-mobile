@@ -1,5 +1,5 @@
+import { useRouter } from "expo-router";
 import {
-  Button,
   ImageBackground,
   StyleSheet,
   Text,
@@ -7,25 +7,30 @@ import {
   View,
 } from "react-native";
 
-export default function App() {
+export default function Start() {
+  const router = useRouter();
   return (
     <View style={style.container}>
       <ImageBackground
         style={style.image}
-        source={require("../../assets/images/bg-start.png")}
+        source={require("../assets/images/bg-start.png")}
       >
         <Text style={style.title}>RunFlow</Text>
         <Text style={style.text}>
           Seu progresso começa com o primeiro passo. Corra e evolua!
         </Text>
-        <TouchableOpacity style={style.button}>
-            <Text style={style.buttonText}>Começar</Text>
+        <TouchableOpacity
+          onPress={() => {
+            router.navigate("/cadastro");
+          }}
+          style={style.button}
+        >
+          <Text style={style.buttonText}>Começar</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
   );
 }
-
 const style = StyleSheet.create({
   container: {
     width: "100%",

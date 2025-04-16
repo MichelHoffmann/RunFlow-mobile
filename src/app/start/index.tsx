@@ -13,15 +13,17 @@ export default function Start() {
     <View style={style.container}>
       <ImageBackground
         style={style.image}
-        source={require("../assets/images/bg-start.png")}
+        source={require("../../assets/images/bg-start.png")}
       >
         <Text style={style.title}>RunFlow</Text>
         <Text style={style.text}>
           Seu progresso começa com o primeiro passo. Corra e evolua!
         </Text>
+        
         <TouchableOpacity
           onPress={() => {
-            router.navigate("/cadastro");
+            // router.navigate("/cadastro");
+            alert('Tem que remover os comentarios quando estiver pronto')
           }}
           style={style.button}
         >

@@ -1,7 +1,7 @@
 import { TextInput, TextInputProps, View } from "react-native";
 import styles from "./style";
 import { AtSign, Eye, EyeOff, Lock, UserRound } from "lucide-react-native";
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { Controller, UseControllerProps } from "react-hook-form";
 
 type Props = {
@@ -13,12 +13,17 @@ type Props = {
 const Input = forwardRef<TextInput, Props>(
   ({ icon, formProps, inputProps }, ref) => {
     const [onFocus, setOnFocus] = useState(false);
-    const [showPassword, setShowPassword] = useState(true);
-    const condition = icon === "password" && showPassword;
+    const [showPassword, setShowPassword] = useState<boolean | null>(null);
 
     function handleShowPassword() {
-      alert("Show password");
+      setShowPassword(!showPassword)
     }
+
+    useEffect(() =>{
+      if(icon === 'password') {
+        setShowPassword(false)
+      }
+    }, [])
     return (
       <Controller
         render={({ field }) => (
@@ -35,19 +40,27 @@ const Input = forwardRef<TextInput, Props>(
                 placeholderTextColor={"#676767"}
                 cursorColor={"#896CFE"}
                 style={styles.input}
-                {...(icon === "password" ? { secureTextEntry: true } : {})}
+                {...(!showPassword && { secureTextEntry: true })}
                 onFocus={() => setOnFocus(true)}
                 onBlur={() => setOnFocus(false)}
                 {...inputProps}
               />
             </View>
-            {condition && (
-              <Eye
-                size={24}
-                color={"#676767"}
-                onPress={handleShowPassword}
-              />
-            )}
+
+            {showPassword !== null &&
+              (!showPassword ? (
+                <EyeOff
+                  size={24}
+                  color={"#676767"}
+                  onPress={() => handleShowPassword()}
+                />
+              ) : (
+                <Eye
+                  size={24}
+                  color={"#676767"}
+                  onPress={() => handleShowPassword()}
+                />
+              ))}
           </View>
         )}
         {...formProps}
